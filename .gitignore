@@ -1,6 +1,3 @@
-# Safety net now that this repo is public: never let a filled-in secret land here by accident.
-# The real workflow for the repo credential always writes to %TEMP% (see bootstrap/gitea-repo-secret.yaml.example)
-# and never to this directory — this .gitignore is a second line of defense in case that habit ever slips.
 gitea-repo-secret.yaml
 *.secret.yaml
 .env
