@@ -1,0 +1,65 @@
+# Helm values for the gitea-charts/gitea chart, tuned for the 12GB-RAM constraint
+# (see "Hardware corrections" in proxmox-week1-notes.md).
+#
+# Core decision: skip the chart's bundled Postgres/Redis/Valkey sub-charts entirely and run Gitea
+# against SQLite with in-process cache/session/queue. This is a single-user homelab instance — SQLite
+# is genuinely the right tool here, not just the cheap one, and it avoids paying for 2-3 extra pods
+# (a DB, a cache, maybe HA variants of both) that would otherwise eat a meaningful slice of the
+# worker VM's 4GB before ArgoCD or anything else gets a turn.
+#
+# IMPORTANT: run this first, before installing, to catch any key that has drifted in a newer chart version:
+#   helm repo add gitea-charts https://dl.gitea.com/charts/
+#   helm repo update
+#   helm show values gitea-charts/gitea > %TEMP%\gitea-chart-defaults.yaml     (cmd.exe)
+#   helm show values gitea-charts/gitea > $env:TEMP\gitea-chart-defaults.yaml  (PowerShell)
+# (not /tmp/... - that path doesn't exist on Windows and fails with "the system cannot find the path specified")
+# Compare the subchart toggle names (postgresql*, redis*, valkey*, memcached*) against what's below —
+# chart maintainers have renamed these across major versions. Fix this file to match before `helm install`,
+# the same "test before apply" discipline as the known-blockers table's advice for the Terraform provider.
+
+postgresql:
+  enabled: false
+postgresql-ha:
+  enabled: false
+redis-cluster:
+  enabled: false
+valkey-cluster:
+  enabled: false
+memcached:
+  enabled: false
+
+gitea:
+  admin:
+    username: gitea-admin
+    password: "changeme-set-a-real-one-before-install"   # rotate immediately after first login
+    email: "admin@homelab.local"
+  config:
+    database:
+      DB_TYPE: sqlite3
+    session:
+      PROVIDER: memory
+    cache:
+      ADAPTER: memory
+    queue:
+      TYPE: level
+    server:
+      OFFLINE_MODE: true
+    # No email server for a single-user homelab instance yet — fine to leave disabled.
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 128Mi
+  limits:
+    memory: 512Mi
+
+persistence:
+  enabled: true
+  size: 2Gi
+
+service:
+  http:
+    type: ClusterIP
+    port: 3000
+  ssh:
+    type: ClusterIP

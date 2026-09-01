@@ -1,0 +1,71 @@
+# Helm values for the argo-cd chart (argoproj/argo-cd), tuned for the 12GB-RAM constraint.
+#
+# Trimmed relative to defaults:
+#   - dex disabled: no SSO provider for a single local admin user in a homelab
+#   - applicationSet disabled: the app-of-apps pattern here uses plain Application resources
+#     watching a git directory, which doesn't need the ApplicationSet controller
+#   - notifications disabled: alerting routes through Alertmanager -> Telegram/Discord starting
+#     Week 6, not through Argo's own notifications controller
+#   - redis-ha disabled, single redis instance kept: HA is not meaningful on a single physical box
+#   - server.insecure: true, so the UI/API serve plain HTTP behind `kubectl port-forward` for now;
+#     revisit when this moves behind Tailscale in Week 5
+#
+# Verify against the current chart before installing, same reasoning as gitea-values.yaml:
+#   helm repo add argo https://argoproj.github.io/argo-helm
+#   helm repo update
+#   helm show values argo/argo-cd > %TEMP%\argocd-chart-defaults.yaml     (cmd.exe)
+#   helm show values argo/argo-cd > $env:TEMP\argocd-chart-defaults.yaml  (PowerShell)
+
+dex:
+  enabled: false
+
+applicationSet:
+  enabled: false
+
+notifications:
+  enabled: false
+
+redis-ha:
+  enabled: false
+
+redis:
+  enabled: true
+
+configs:
+  params:
+    server.insecure: true
+
+controller:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      memory: 512Mi
+
+server:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      memory: 256Mi
+
+repoServer:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      memory: 256Mi
+
+# Suggested install command once this file is verified:
+#   kubectl create namespace argocd
+#   helm install argocd argo/argo-cd -n argocd -f argocd-values.yaml
+#
+# Initial admin password (auto-generated, rotate after first login):
+#   kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d
+#
+# Port-forward to reach the UI before Tailscale exists (Week 5):
+#   kubectl port-forward -n argocd svc/argocd-server 8080:443
+# and open https://localhost:8080 (self-signed cert warning is expected)
