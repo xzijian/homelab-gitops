@@ -1,13 +1,3 @@
-# The one intentional manual `kubectl apply` in this whole project — everything downstream of this
-# gets deployed via `git push` instead. See "ArgoCD chicken and egg" in the project plan's
-# known-blockers table: this Application has to exist before ArgoCD can bootstrap itself from git.
-#
-# Apply once, after Gitea and ArgoCD are both running and this repo has been pushed to Gitea:
-#   kubectl apply -f bootstrap/root-app.yaml
-#
-# Fill in <gitea-username> below (and confirm the in-cluster service name/port with
-# `kubectl get svc -n gitea`, defaults assumed here) before applying.
-
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -18,7 +8,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: http://gitea-http.gitea.svc.cluster.local:3000/<gitea-username>/homelab-gitops.git
+    repoURL: http://gitea-http.gitea.svc.cluster.local:3000/gitea-admin/homelab-gitops.git
     targetRevision: main
     path: apps
   destination:
