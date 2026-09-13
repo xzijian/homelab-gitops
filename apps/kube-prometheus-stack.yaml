@@ -57,7 +57,7 @@ spec:
 
         grafana:
           adminPassword: "changeme-rotate-after-first-login"
-          strategy: 
+          deploymentStrategy: 
             type: Recreate
           resources:
             requests:
