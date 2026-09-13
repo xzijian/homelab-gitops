@@ -57,6 +57,8 @@ spec:
 
         grafana:
           adminPassword: "changeme-rotate-after-first-login"
+          strategy: 
+            type: Recreate
           resources:
             requests:
               cpu: 50m
@@ -80,6 +82,7 @@ spec:
               url: http://loki-stack.monitoring.svc.cluster.local:3100
           nodeSelector:
             kubernetes.io/hostname: k3s-worker
+        
 
         kube-state-metrics:
           resources:
