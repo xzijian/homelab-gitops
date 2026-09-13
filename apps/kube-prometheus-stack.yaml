@@ -59,6 +59,7 @@ spec:
           adminPassword: "changeme-rotate-after-first-login"
           deploymentStrategy: 
             type: Recreate
+            rollingUpdate: null
           resources:
             requests:
               cpu: 50m
