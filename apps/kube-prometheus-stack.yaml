@@ -81,6 +81,7 @@ spec:
               type: loki
               access: proxy
               url: http://loki-stack.monitoring.svc.cluster.local:3100
+              isDefault: false
           nodeSelector:
             kubernetes.io/hostname: k3s-worker
         
