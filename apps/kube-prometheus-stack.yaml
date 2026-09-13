@@ -1,0 +1,103 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kube-prometheus-stack
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://prometheus-community.github.io/helm-charts
+    chart: kube-prometheus-stack
+    targetRevision: "84.1.2"
+    helm:
+      releaseName: kube-prometheus-stack
+      values: |
+        kubeControllerManager:
+          enabled: false
+        kubeScheduler:
+          enabled: false
+        kubeEtcd:
+          enabled: false
+        kubeProxy:
+          enabled: false
+
+        defaultRules:
+          rules:
+            kubeControllerManager: false
+            kubeScheduler: false
+            etcd: false
+            kubeProxy: false
+
+        prometheus:
+          prometheusSpec:
+            retention: 2d
+            resources:
+              requests:
+                cpu: 100m
+                memory: 512Mi
+              limits:
+                memory: 768Mi
+            storageSpec:
+              volumeClaimTemplate:
+                spec:
+                  storageClassName: local-path   # k3s's built-in default StorageClass
+                  accessModes: ["ReadWriteOnce"]
+                  resources:
+                    requests:
+                      storage: 5Gi
+            # nodeSelector:
+            #   kubernetes.io/hostname: k3s-worker
+
+        alertmanager:
+          enabled: false
+
+        grafana:
+          adminPassword: "changeme-rotate-after-first-login"
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              memory: 256Mi
+          persistence:
+            enabled: true
+            storageClassName: local-path
+            size: 1Gi
+          sidecar:
+            dashboards:
+              enabled: true
+              label: grafana_dashboard
+              searchNamespace: ALL
+          defaultDashboardsEnabled: true
+          additionalDataSources:
+            - name: Loki
+              type: loki
+              access: proxy
+              url: http://loki-stack.monitoring.svc.cluster.local:3100
+          # nodeSelector:
+          #   kubernetes.io/hostname: k3s-worker
+
+        kube-state-metrics:
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              memory: 128Mi
+
+        prometheus-node-exporter:
+          resources:
+            requests:
+              cpu: 25m
+              memory: 32Mi
+            limits:
+              memory: 64Mi
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
