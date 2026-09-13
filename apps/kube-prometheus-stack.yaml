@@ -40,7 +40,7 @@ spec:
             storageSpec:
               volumeClaimTemplate:
                 spec:
-                  storageClassName: local-path   # k3s's built-in default StorageClass
+                  storageClassName: local-path  
                   accessModes: ["ReadWriteOnce"]
                   resources:
                     requests:
