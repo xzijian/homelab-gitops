@@ -21,6 +21,10 @@ spec:
         kubeProxy:
           enabled: false
 
+        prometheusOperator:
+          admissionWebhooks:
+            enabled: false
+        
         defaultRules:
           rules:
             kubeControllerManager: false
