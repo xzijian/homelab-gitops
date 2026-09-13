@@ -49,8 +49,8 @@ spec:
                   resources:
                     requests:
                       storage: 5Gi
-            # nodeSelector:
-            #   kubernetes.io/hostname: k3s-worker
+            nodeSelector:
+              kubernetes.io/hostname: k3s-worker
 
         alertmanager:
           enabled: false
@@ -78,8 +78,8 @@ spec:
               type: loki
               access: proxy
               url: http://loki-stack.monitoring.svc.cluster.local:3100
-          # nodeSelector:
-          #   kubernetes.io/hostname: k3s-worker
+          nodeSelector:
+            kubernetes.io/hostname: k3s-worker
 
         kube-state-metrics:
           resources:
