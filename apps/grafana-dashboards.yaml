@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: http://gitea-http.gitea.svc.cluster.local:3000/gitea-admin/homelab-gitops.git
     targetRevision: main
-    path: monitoring/dashboards
+    path: monitoring/dashboard
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
