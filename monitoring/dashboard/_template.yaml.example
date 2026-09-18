@@ -1,0 +1,16 @@
+# Copy this file to a real filename (drop the .example, e.g. node-exporter-full.yaml) and follow
+# the workflow in README.md in this directory. Everything in CHANGE-ME below needs replacing.
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dashboard-CHANGE-ME       # e.g. dashboard-node-exporter-full
+  namespace: monitoring
+  labels:
+    grafana_dashboard: "1"        # this label is what the Grafana sidecar watches for -- required
+data:
+  CHANGE-ME.json: |               # e.g. node-exporter-full.json -- key name doesn't matter to
+                                   # Grafana, but keeping it descriptive helps future-you
+    {
+      "PASTE THE EXPORTED DASHBOARD JSON HERE, REPLACING THIS WHOLE OBJECT": true
+    }

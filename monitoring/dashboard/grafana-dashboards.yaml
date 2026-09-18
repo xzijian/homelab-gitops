@@ -1,0 +1,26 @@
+# ArgoCD Application that watches monitoring/dashboards/ in *this* repo (a plain directory of
+# ConfigMap manifests, not a Helm chart) and applies whatever's there directly. This is the
+# mechanism that makes imported/custom Grafana dashboards survive a `terraform destroy` + rebuild
+# instead of living only in Grafana's own storage: see monitoring/dashboards/README.md for the
+# workflow.
+#
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grafana-dashboards
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: http://gitea-http.gitea.svc.cluster.local:3000/<gitea-username>/homelab-gitops.git
+    targetRevision: main
+    path: monitoring/dashboards
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
