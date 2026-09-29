@@ -658,7 +658,7 @@ data:
                   "y": 0,
                   "width": 12,
                   "height": 11,
-                  "element": { "kind": "ElementReference", "name": "panel-1" },
+                  "element": { "kind": "ElementReference", "name": "panel-1" }
                 }
               },
               {
@@ -668,7 +668,7 @@ data:
                   "y": 0,
                   "width": 12,
                   "height": 11,
-                  "element": { "kind": "ElementReference", "name": "panel-4" },
+                  "element": { "kind": "ElementReference", "name": "panel-4" }
                 }
               },
               {
@@ -678,7 +678,7 @@ data:
                   "y": 11,
                   "width": 12,
                   "height": 11,
-                  "element": { "kind": "ElementReference", "name": "panel-2" },
+                  "element": { "kind": "ElementReference", "name": "panel-2" }
                 }
               },
               {
@@ -688,7 +688,7 @@ data:
                   "y": 11,
                   "width": 12,
                   "height": 11,
-                  "element": { "kind": "ElementReference", "name": "panel-3" },
+                  "element": { "kind": "ElementReference", "name": "panel-3" }
                 }
               },
               {
@@ -698,7 +698,7 @@ data:
                   "y": 22,
                   "width": 24,
                   "height": 11,
-                  "element": { "kind": "ElementReference", "name": "panel-5" },
+                  "element": { "kind": "ElementReference", "name": "panel-5" }
                 }
               }
             ]
