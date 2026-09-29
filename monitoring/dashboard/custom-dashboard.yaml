@@ -658,15 +658,8 @@ data:
                   "y": 0,
                   "width": 12,
                   "height": 11,
-                  "element": {
-                    "kind": "ElementReference",
-                    "name": "panel-2"
-                  },
-                  "repeat": {
-                    "mode": "variable",
-                    "value": "namespace",
-                    "direction": "h"
-                  }
+                  "element": { "kind": "ElementReference", "name": "panel-1" },
+                  "repeat": { "mode": "variable", "value": "namespace", "direction": "h" }
                 }
               },
               {
@@ -676,15 +669,8 @@ data:
                   "y": 0,
                   "width": 12,
                   "height": 11,
-                  "element": {
-                    "kind": "ElementReference",
-                    "name": "panel-3"
-                  },
-                  "repeat": {
-                    "mode": "variable",
-                    "value": "namespace",
-                    "direction": "h"
-                  }
+                  "element": { "kind": "ElementReference", "name": "panel-4" },
+                  "repeat": { "mode": "variable", "value": "namespace", "direction": "h" }
                 }
               },
               {
@@ -694,15 +680,8 @@ data:
                   "y": 11,
                   "width": 12,
                   "height": 11,
-                  "element": {
-                    "kind": "ElementReference",
-                    "name": "panel-1"
-                  },
-                  "repeat": {
-                    "mode": "variable",
-                    "value": "namespace",
-                    "direction": "h"
-                  }
+                  "element": { "kind": "ElementReference", "name": "panel-2" },
+                  "repeat": { "mode": "variable", "value": "namespace", "direction": "h" }
                 }
               },
               {
@@ -712,15 +691,8 @@ data:
                   "y": 11,
                   "width": 12,
                   "height": 11,
-                  "element": {
-                    "kind": "ElementReference",
-                    "name": "panel-4"
-                  },
-                  "repeat": {
-                    "mode": "variable",
-                    "value": "namespace",
-                    "direction": "h"
-                  }
+                  "element": { "kind": "ElementReference", "name": "panel-3" },
+                  "repeat": { "mode": "variable", "value": "namespace", "direction": "h" }
                 }
               },
               {
@@ -730,15 +702,8 @@ data:
                   "y": 22,
                   "width": 24,
                   "height": 11,
-                  "element": {
-                    "kind": "ElementReference",
-                    "name": "panel-5"
-                  },
-                  "repeat": {
-                    "mode": "variable",
-                    "value": "namespace",
-                    "direction": "h"
-                  }
+                  "element": { "kind": "ElementReference", "name": "panel-5" },
+                  "repeat": { "mode": "variable", "value": "namespace", "direction": "h" }
                 }
               }
             ]
